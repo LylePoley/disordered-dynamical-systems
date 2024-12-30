@@ -27,7 +27,8 @@ class CircularBuffer:
             return self.buffer[-1]
         return self.buffer[(self.index - self.filled_values) % self.principal_length]
 
-    
+    def shape(self):
+        return self.buffer.shape
 
     def append(self, value): 
         self.filled_values = min(self.filled_values + 1, self.principal_length)
