@@ -1,24 +1,48 @@
-# 1. Import Dash
 import dash
-import dash_bootstrap_components as dbc
+import plotly.express as px
+from dash import html, dcc
+from dash_extensions.enrich import ServersideOutputTransform, Serverside, DashProxy, Output, Input, State
 
-# 2. Create a Dash app instance
-app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+# Initialize the app with DashProxy
+app = DashProxy(__name__, transforms=[ServersideOutputTransform()])
 
-# 3. Add the example to the app's layout
-# First we copy the snippet from the docs
-badge = dbc.Button(
-    [
-        "Notifications",
-        dbc.Badge("4", color="light", text_color="primary", className="ms-1"),
-    ],
-    color="primary",
+initial_data = Serverside(px.data.gapminder())
+
+app.layout = html.Div([
+    html.Button("Query data", id="btn"),
+    dcc.Dropdown(id="dd"),
+    dcc.Graph(id="graph"),
+    dcc.Store(id="store", data=initial_data)
+])
+
+@app.callback(
+    Output("store", "data"),
+    # Input("btn", "n_clicks"),
+    # prevent_initial_call=True
 )
+def query_data():
+    import time
+    time.sleep(3)  # Emulate slow database operation
+    return Serverside(px.data.gapminder())  # No JSON serialization here
 
-# Then we incorporate the snippet into our layout.
-# This example keeps it simple and just wraps it in a Container
-app.layout = dbc.Container(badge, fluid=True)
+@app.callback(
+    [Output("dd", "options"), Output("dd", "value")],
+    Input("store", "data"),
+    prevent_initial_call=True
+)
+def update_dd(df):
+    options = [{"label": column, "value": column} for column in df["year"]]
+    return options, options[0]["value"]
 
-# 5. Start the Dash server
+@app.callback(
+    Output("graph", "figure"),
+    Input("dd", "value"),
+    State("store", "data"),
+    prevent_initial_call=True
+)
+def update_graph(value, df):
+    df = df.query("year == {}".format(value))
+    return px.sunburst(df, path=["continent", "country"], values="pop", color="lifeExp", hover_data=["iso_alpha"])
+
 if __name__ == "__main__":
-    app.run_server()
+    app.run_server(debug=True)
