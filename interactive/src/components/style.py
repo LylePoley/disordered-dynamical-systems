@@ -14,7 +14,7 @@ SIDEBAR = {
 SIDEBAR_DIV = {
     'display': 'flex', 
     'flex-direction': 'row', 
-    'width':'10rem'
+    'width':'18rem'
 }
 
 # the styles for the main content position it to the right of the sidebar and
@@ -40,7 +40,7 @@ SIDEBAR_DROPDOWN = {
     'flex': '1',
     "margin-right": f"{0.01*SIDEBAR_WIDTH}rem",
     "margin-left": f"{0.01*SIDEBAR_WIDTH}rem",
-    'width': f'{0.6*SIDEBAR_WIDTH}rem'
+    'width': f'{0.85*SIDEBAR_WIDTH}rem'
 }
 HEATMAP = {
     'width': '40rem',

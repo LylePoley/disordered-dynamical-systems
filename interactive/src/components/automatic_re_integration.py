@@ -3,11 +3,11 @@ import numpy as np
 from src.components import ids, initial_values, constants
 from utility.integrate import integrate
 from .constants import BUFFER_SIZE, PLOT_WIDTH, REINTEGRATE_THRESHOLD, dt
-from ..dynamical_systems import DisorderedDynamicalSystem
+from src.components.variables.dynamical_system import id_to_dynamical_system
 
 plot_updater = dcc.Interval(id=ids.plot_updater, interval=constants.REFRESH_RATE, n_intervals=0)
 
-def render(app: Dash, dynamical_system: DisorderedDynamicalSystem) -> html.Div:
+def render(app: Dash) -> html.Div:
     """ dynamical_system(t, y, alpha) -> dy/dt"""
 
     @app.callback(
@@ -17,9 +17,12 @@ def render(app: Dash, dynamical_system: DisorderedDynamicalSystem) -> html.Div:
         Input(ids.t0_index, 'data'),
         State(ids.t, 'data'),
         State(ids.y, 'data'),
-        State(ids.alpha, 'data')
+        State(ids.alpha, 'data'),
+        State(ids.dynamical_system_dropdown, 'value'),
     )
-    def re_integrate_with_same_parameters(t0_index, t, y, alpha):
+    def re_integrate_with_same_parameters(t0_index, t, y, alpha, dynamical_system_id):
+        dynamical_system = id_to_dynamical_system(dynamical_system_id)
+
         if t[t0_index] == 0.0:
             t, y = integrate(dynamical_system, 
                             t0=0.0, 
@@ -63,9 +66,12 @@ def render(app: Dash, dynamical_system: DisorderedDynamicalSystem) -> html.Div:
         State(ids.t, 'data'),
         State(ids.y, 'data'),
         State(ids.t0_index, 'data'),
+        State(ids.dynamical_system_dropdown, 'value'),
         prevent_initial_call=True
     )
-    def re_integrate_with_new_parameters(alpha, t, y, t0_index):
+    def re_integrate_with_new_parameters(alpha, t, y, t0_index, dynamical_system_id):
+        dynamical_system = id_to_dynamical_system(dynamical_system_id)
+    
         t = np.asarray(t, dtype=float)
         y = np.asarray(y, dtype=float)
         

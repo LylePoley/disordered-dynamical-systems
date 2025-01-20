@@ -27,7 +27,7 @@ class GeneralisedLotkaVolterra(DisorderedDynamicalSystem):
     
 class Kuramoto(DisorderedDynamicalSystem):
     def __call__(self, t: float, y: np.ndarray, alpha: np.ndarray) -> np.ndarray:
-        return alpha@np.sin(y[:, None] - y) # this is wrong
+        return np.einsum('ij, ij -> i', alpha, np.sin(y[:, None] - y))
     
 class SusceptibleInfectedSusceptible(DisorderedDynamicalSystem):
     def __call__(self, t: float, y: np.ndarray, alpha: np.ndarray) -> np.ndarray:
@@ -41,49 +41,37 @@ class NeuralNetwork(DisorderedDynamicalSystem):
         return -y + alpha@self.sigmoid_function(y)
 
 
-class AvailableSystems(IntEnum):
+class AvailableSystem(IntEnum):
     GENERALISED_LOTKA_VOLTERRA = 0
     KURAMOTO = 1
     SUSCEPTIBLE_INFECTED_SUSCEPTIBLE = 2
     NEURAL_NETWORK = 3
 
-
-dynamical_system_id = dcc.Store(
-    id=ids.dynamical_system_id, 
-    data=AvailableSystems.GENERALISED_LOTKA_VOLTERRA
-)
-
 dynamical_system_dropdown = dcc.Dropdown(
     options=[
-        {'label': 'Generalised Lotka-Volterra', 'value': AvailableSystems.GENERALISED_LOTKA_VOLTERRA},
-        {'label': 'Kuramoto', 'value': AvailableSystems.KURAMOTO},
-        {'label': 'Susceptible-Infected-Susceptible', 'value': AvailableSystems.SUSCEPTIBLE_INFECTED_SUSCEPTIBLE},
-        {'label': 'Neural Network', 'value': AvailableSystems.NEURAL_NETWORK}
+        {'label': 'Generalised Lotka-Volterra', 'value': AvailableSystem.GENERALISED_LOTKA_VOLTERRA.value},
+        {'label': 'Kuramoto', 'value': AvailableSystem.KURAMOTO.value},
+        {'label': 'Susceptible-Infected-Susceptible', 'value': AvailableSystem.SUSCEPTIBLE_INFECTED_SUSCEPTIBLE.value},
+        {'label': 'Neural Network', 'value': AvailableSystem.NEURAL_NETWORK.value}
     ],
     id=ids.dynamical_system_dropdown, 
-    value=AvailableSystems.GENERALISED_LOTKA_VOLTERRA,
+    value=AvailableSystem.GENERALISED_LOTKA_VOLTERRA.value,
     style=style.SIDEBAR_DROPDOWN
 )
 
 # TODO: make a better way to add kwargs specifically for the dynamical system of interest
 def id_to_dynamical_system(id: int, **kwargs) -> DisorderedDynamicalSystem:
 
-    if AvailableSystems(id) == AvailableSystems.GENERALISED_LOTKA_VOLTERRA:
+    if id == AvailableSystem.GENERALISED_LOTKA_VOLTERRA.value:
         return GeneralisedLotkaVolterra(**kwargs)
-    elif AvailableSystems(id) == AvailableSystems.KURAMOTO:
+    elif id == AvailableSystem.KURAMOTO.value:
         return Kuramoto(**kwargs)
-    elif AvailableSystems(id) == AvailableSystems.SUSCEPTIBLE_INFECTED_SUSCEPTIBLE:
+    elif id == AvailableSystem.SUSCEPTIBLE_INFECTED_SUSCEPTIBLE.value:
         return SusceptibleInfectedSusceptible(**kwargs)
-    elif AvailableSystems(id) == AvailableSystems.NEURAL_NETWORK:
+    elif id == AvailableSystem.NEURAL_NETWORK.value:
         return NeuralNetwork(**kwargs)
     
 
 def render(app: Dash, div_style: str | None = None) -> html.Div:
-    @app.callback(
-        Output(ids.dynamical_system_id, 'data'),
-        Input(ids.dynamical_system_dropdown, 'value')
-    )
-    def update_dynamical_system_dropdown(dynamical_system_id):
-        return dynamical_system_id
-    
-    return html.Div([dynamical_system_dropdown, dynamical_system_id], style=div_style)
+
+    return html.Div([dynamical_system_dropdown], style=div_style)
