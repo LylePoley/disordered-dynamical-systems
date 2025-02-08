@@ -2,15 +2,15 @@ from dash import Dash, dcc, html
 
 from src.components.registers import ids, initial_values
 
-time_store = dcc.Store(
-    id=ids.time,
-    data=initial_values.time
+y_store = dcc.Store(
+    id=ids.y,
+    data=initial_values.y
 )
 
 
 def render() -> html.Div:
 
     return html.Div([
-        time_store
+        y_store
     ]
     )

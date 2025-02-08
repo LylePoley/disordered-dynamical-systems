@@ -1,7 +1,8 @@
 from scipy.integrate import solve_ivp
 import numpy as np
+from typing import Callable
 
-def integrate(function: callable, t0: float, number_of_timesteps: int, dt: float, y0: float, **kwargs) -> tuple[np.ndarray, np.ndarray]:
+def integrate(function: Callable, integration_range: tuple[float, float], dt: float, y0: float, **kwargs) -> tuple[np.ndarray, np.ndarray]:
     """
     Calls scipys solve_ivp function to integrate function over a time span. Values which are set automatically are 
     atol = 1e-8, rtol = 1e-5, and t_eval is also computed automatically.
@@ -15,10 +16,8 @@ def integrate(function: callable, t0: float, number_of_timesteps: int, dt: float
     Returns:
         tuple[np.ndarray, np.ndarray]: The time points and the values of the function at those time points.
     """
-    tf = t0 + number_of_timesteps * dt
 
-    t_eval = np.linspace(t0, tf, number_of_timesteps)
-    solution = solve_ivp(function, t_span=(t0, tf), y0=y0, 
-                        atol=1e-8, rtol=1e-5, t_eval=t_eval, **kwargs)
+    solution = solve_ivp(function, t_span=integration_range, y0=y0, 
+                        atol=1e-8, rtol=1e-5, **kwargs)
     
     return solution.t, solution.y

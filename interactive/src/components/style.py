@@ -1,5 +1,14 @@
+""" This file contains the CSS styles for the components in the app. """
 
 SIDEBAR_WIDTH = 20
+
+TITLE = {
+    'text-align': 'center',
+    'font-size': '2rem',
+    'font-weight': 'bold',
+    'margin-bottom': '2rem'
+}
+
 # the style arguments for the sidebar. We use position:fixed and a fixed width
 SIDEBAR = {
     "position": "fixed",
@@ -12,9 +21,9 @@ SIDEBAR = {
 }
 
 SIDEBAR_DIV = {
-    'display': 'flex', 
-    'flex-direction': 'row', 
-    'width':'18rem'
+    'display': 'flex',
+    'flex-direction': 'row',
+    'width': '18rem'
 }
 
 # the styles for the main content position it to the right of the sidebar and
@@ -24,24 +33,28 @@ CONTENT = {
     "margin-right": "2rem",
     "padding": "2rem 1rem",
 }
+
 SIDEBAR_BUTTON = {
     'flex': '1',
     "margin-right": f"{0.01*SIDEBAR_WIDTH}rem",
     "margin-left": f"{0.01*SIDEBAR_WIDTH}rem",
     'width': f'{0.2*SIDEBAR_WIDTH}rem'
 }
+
 SIDEBAR_SLIDER = {
     'flex': '1',
     "margin-right": f"{0.01*SIDEBAR_WIDTH}rem",
     "margin-left": f"{0.01*SIDEBAR_WIDTH}rem",
     'width': f'{0.6*SIDEBAR_WIDTH}rem'
 }
+
 SIDEBAR_DROPDOWN = {
     'flex': '1',
     "margin-right": f"{0.01*SIDEBAR_WIDTH}rem",
     "margin-left": f"{0.01*SIDEBAR_WIDTH}rem",
     'width': f'{0.85*SIDEBAR_WIDTH}rem'
 }
+
 HEATMAP = {
     'width': '40rem',
     'height': '40rem',
