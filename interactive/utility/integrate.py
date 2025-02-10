@@ -1,6 +1,9 @@
 from scipy.integrate import solve_ivp
 import numpy as np
-from typing import Callable
+from typing import Callable, Annotated
+
+def draw_initial_condition(N: int) -> Annotated[np.ndarray, "shape: (N,)"]:
+    return np.random.uniform(0, 1, N)
 
 def integrate(function: Callable, integration_range: tuple[float, float], dt: float, y0: float, **kwargs) -> tuple[np.ndarray, np.ndarray]:
     """

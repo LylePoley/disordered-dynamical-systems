@@ -11,21 +11,21 @@ z_store = dcc.Store(
 )
 
 z_reset_button = dbc.Button(
-    'Reset z',
+    'Re-draw noise',
     id=ids.interaction_noise_reset_button,
     color='primary',
     style=style.SIDEBAR_BUTTON
 )
 
 
-def render(app: Dash, div_style: str | None = None) -> html.Div:
+def render(app: Dash, style: dict[str, str] | None = None) -> html.Div:
     @app.callback(
         Output(ids.interaction_noise, 'data'),
         Input(ids.interaction_noise_reset_button, 'n_clicks'),
-        State(ids.number_of_agents, 'data'),
+        State(ids.number_of_agents_input, 'value'),
         prevent_initial_call=True
     )
     def reset_interaction_noise(n_clicks: int, number_of_agents: int) -> types.Matrix:
         return np.random.normal(0, 1, (number_of_agents, number_of_agents))
 
-    return html.Div([z_reset_button, z_store], style=div_style)
+    return html.Div([z_reset_button, z_store], style=style)

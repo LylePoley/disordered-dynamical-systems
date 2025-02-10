@@ -6,27 +6,15 @@ import plotly.graph_objects as go
 from src.components.registers import ids, initial_values, types
 from src.components import style
 
-
-def render(app: Dash) -> dcc.Graph:
-    @app.callback(
-        Output(ids.abundance_plot, 'figure'),
-        Input(ids.time, 'data'),
-        Input(ids.y, 'data'),
-        State(ids.abundance_plot, 'figure'),
-        State(ids.number_of_agents, 'data'),
-    )
-    def update_abundance_plot_data(t: float, y: types.Vector, abundance_figure: go.Figure, number_of_agents: int) -> go.Figure:
-        for i in range(number_of_agents):
-            abundance_figure['data'][i]['x'] = t
-            abundance_figure['data'][i]['y'] = y[i]
-
-        return abundance_figure
-
-    # initial creation of the figure
+def make_figure(t: types.Vector | list = [], y: types.OdeSolution | list = []) -> go.Figure:
     fig = go.Figure()
-    for _ in range(initial_values.number_of_agents):
-        fig.add_trace(go.Scatter(x=[], y=[], mode='lines', showlegend=False))
-    fig.update_layout(xaxis={'title': 'Time'})
+
+    for yi in y:
+        fig.add_trace(go.Scatter(x=t, y=yi, mode='lines', showlegend=False))
+    fig.update_layout(
+        xaxis_title='Time',
+        yaxis_title= r"agent state")
+    fig.update_layout()
     fig.update_layout(
         yaxis=dict(
             autorange=True,
@@ -40,8 +28,30 @@ def render(app: Dash) -> dcc.Graph:
             )
         )
     )
+    return fig
+
+def render(app: Dash, style: dict[str, str] | None = None) -> dcc.Graph:
+    @app.callback(
+        Output(ids.abundance_plot, 'figure'),
+        Input(ids.time, 'data'),
+        Input(ids.y, 'data'),
+        State(ids.abundance_plot, 'figure'),
+    )
+    def update_abundance_plot_data(
+        t: float,
+        y: types.Vector,
+        abundance_figure: go.Figure
+        )\
+            -> go.Figure:
+        
+        fig = make_figure(t, y)
+
+        return fig
+
+    # initial creation of the figure
+    fig = make_figure()
 
     return dcc.Graph(id=ids.abundance_plot,
                      figure=fig,
-                     style=style.CONTENT
+                     style=style
                      )

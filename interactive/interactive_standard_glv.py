@@ -1,8 +1,7 @@
 
 
-import dash
 import dash_bootstrap_components as dbc
-from dash import (dcc, html)
+from dash import Dash, html
 
 from src.components.variables import (
     dynamical_system,
@@ -20,14 +19,10 @@ from src.components.plots import (
     trajectories
 )
 
-from src.components.registers import (
-    ids,
-    initial_values
-)
-
 from src.components import (
+    integration,
     style,
-    integration
+    title,
 )
 
 ''' TODO:   only have the integrator work if the plot needs more data to show (DONE)
@@ -44,7 +39,7 @@ from src.components import (
 '''
 
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 sidebar = html.Div(
     [
@@ -55,28 +50,27 @@ sidebar = html.Div(
         ),
         html.Hr(),
         interaction_mean.render(
-            app, div_style=style.SIDEBAR_DIV),
+            app, style=style.SIDEBAR_LABELLED_INPUT),
 
         html.Hr(),
         interaction_standard_deviation.render(
-            app, div_style=style.SIDEBAR_DIV),
+            app, style=style.SIDEBAR_LABELLED_INPUT),
 
         html.Hr(),
         number_of_agents.render(
-            app, div_style=style.SIDEBAR_DIV),
+            app, style=style.SIDEBAR_LABELLED_INPUT),
 
         html.Hr(),
-        time_final.render(app, div_style=style.SIDEBAR_DIV),
+        time_final.render(app, style=style.SIDEBAR_LABELLED_INPUT),
 
         html.Hr(),
-        interaction_noise.render(app, div_style=style.SIDEBAR_DIV),
+        interaction_noise.render(app, style=style.SIDEBAR_DIV),
 
         html.Hr(),
-        integration.render(app, div_style=style.SIDEBAR_DIV),
+        integration.render(app, style=style.SIDEBAR_DIV),
 
         html.Hr(),
-        html.Label("Dynamical system:", style=style.SIDEBAR_DIV),
-        dynamical_system.render(app, div_style=style.SIDEBAR_DIV)
+        dynamical_system.render(app, style=style.SIDEBAR_DROPDOWN)
     ],
     style=style.SIDEBAR,
 )
@@ -84,8 +78,10 @@ sidebar = html.Div(
 
 app.layout = html.Div([
     sidebar,
-    trajectories.render(app),
+    title.render(app, style=style.TITLE_DIV),
+    trajectories.render(app, style=style.CONTENT),
 
+    # invisible components
     interaction_matrix.render(app),
     time.render(),
     y.render(),

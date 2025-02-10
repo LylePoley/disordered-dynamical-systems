@@ -23,14 +23,33 @@ SIDEBAR = {
 SIDEBAR_DIV = {
     'display': 'flex',
     'flex-direction': 'row',
-    'width': '18rem'
+    'width': f'{0.9*SIDEBAR_WIDTH}rem',
+    'align': 'center',
 }
+
+SIDEBAR_LABELLED_INPUT = {
+    'flex': '1',
+    'flex-direction': 'column',
+    'width': f'{0.85*SIDEBAR_WIDTH}rem',
+    'align': 'center',
+    "margin-right": f"{0.01*SIDEBAR_WIDTH}rem",
+    "margin-left": f"{0.01*SIDEBAR_WIDTH}rem"
+}
+
+
+TITLE_DIV = {
+    "margin-left": f"{10 + SIDEBAR_WIDTH}rem",
+    "margin-right": "10rem",
+    "margin-top": "5rem",
+    # "padding": "2rem 1rem",
+}
+
 
 # the styles for the main content position it to the right of the sidebar and
 # add some padding.
 CONTENT = {
-    "margin-left": "20rem",
-    "margin-right": "2rem",
+    "margin-left": f"{3 + SIDEBAR_WIDTH}rem",
+    "margin-right": "3rem",
     "padding": "2rem 1rem",
 }
 
@@ -55,8 +74,3 @@ SIDEBAR_DROPDOWN = {
     'width': f'{0.85*SIDEBAR_WIDTH}rem'
 }
 
-HEATMAP = {
-    'width': '40rem',
-    'height': '40rem',
-    'margin-left': '50rem'
-}
