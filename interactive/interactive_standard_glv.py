@@ -1,5 +1,3 @@
-
-
 import dash_bootstrap_components as dbc
 from dash import Dash, html
 
@@ -43,34 +41,47 @@ app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 sidebar = html.Div(
     [
-        html.H3("Options", className="display-4"),
+        html.H3(
+            "Options", className="display-4"
+        ),
         html.Hr(),
         html.P(
             "Select options for the integration.", className="lead"
         ),
         html.Hr(),
         interaction_mean.render(
-            app, style=style.SIDEBAR_LABELLED_INPUT),
+            app, style=style.SIDEBAR_LABELLED_INPUT
+        ),
 
         html.Hr(),
         interaction_standard_deviation.render(
-            app, style=style.SIDEBAR_LABELLED_INPUT),
+            app, style=style.SIDEBAR_LABELLED_INPUT
+        ),
 
         html.Hr(),
         number_of_agents.render(
-            app, style=style.SIDEBAR_LABELLED_INPUT),
+            app, style=style.SIDEBAR_LABELLED_INPUT
+        ),
 
         html.Hr(),
-        time_final.render(app, style=style.SIDEBAR_LABELLED_INPUT),
+        time_final.render(
+            app, style=style.SIDEBAR_LABELLED_INPUT
+        ),
 
         html.Hr(),
-        interaction_noise.render(app, style=style.SIDEBAR_DIV),
+        interaction_noise.render(
+            app, style=style.SIDEBAR_DIV
+        ),
 
         html.Hr(),
-        integration.render(app, style=style.SIDEBAR_DIV),
+        integration.render(
+            app, style=style.SIDEBAR_DIV
+        ),
 
         html.Hr(),
-        dynamical_system.render(app, style=style.SIDEBAR_DROPDOWN)
+        dynamical_system.render(
+            app, style=style.SIDEBAR_DROPDOWN
+        )
     ],
     style=style.SIDEBAR,
 )

@@ -13,21 +13,10 @@ def make_figure(t: types.Vector | list = [], y: types.OdeSolution | list = []) -
         fig.add_trace(go.Scatter(x=t, y=yi, mode='lines', showlegend=False))
     fig.update_layout(
         xaxis_title='Time',
-        yaxis_title= r"agent state")
-    fig.update_layout()
-    fig.update_layout(
-        yaxis=dict(
-            autorange=True,
-            fixedrange=False
-        )
-    )
-    fig.update_layout(
-        xaxis=dict(
-            rangeslider=dict(
-                visible=True
-            )
-        )
-    )
+        xaxis_rangeslider_visible=True,
+        yaxis_title= r"agent state",
+        yaxis_fixedrange=False)
+
     return fig
 
 def render(app: Dash, style: dict[str, str] | None = None) -> dcc.Graph:
