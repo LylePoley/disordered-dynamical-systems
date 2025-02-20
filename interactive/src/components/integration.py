@@ -1,8 +1,7 @@
-from dash import Dash, Input, Output, State, html
+from dash import Dash, Input, Output, State, html, dcc
 import dash_bootstrap_components as dbc
 import numpy as np
 from src.components.registers import ids, types
-from src.components import style
 from utility.integrate import integrate, draw_initial_condition
 from .registers.constants import dt
 from src.components.variables.dynamical_system import id_to_dynamical_system
@@ -13,13 +12,18 @@ from src.components.registers.types import Vector, Matrix, OdeSolution
 integrate_button = dbc.Button(
     'Integrate dynamics',
     id=ids.integrate_button,
-    color='primary',
-    size='sm',
-    style=style.SIDEBAR_BUTTON
+    color="secondary",
+    class_name="sidebar-button"
 )
 
+integrate_tooltip = dbc.Tooltip(
+    [
+        dcc.Markdown(
+            r"""Integrates the dynamics in the range $0<t<T$. Note that the plot will not change if none of the interaction matrix, initial condition, or dynamical system are changed.""", mathjax=True)],
+    target=ids.integrate_button
+)
 
-def render(app: Dash, style: dict[str, str] | None = None) -> html.Div:
+def render(app: Dash, class_name: str | None = None) -> html.Div:
 
     @app.callback(
         Output(ids.time, 'data'),
@@ -28,6 +32,7 @@ def render(app: Dash, style: dict[str, str] | None = None) -> html.Div:
         State(ids.time_final_input, 'value'),
         State(ids.time, 'data'),
         State(ids.y, 'data'),
+        State(ids.initial_condition, 'data'),
         State(ids.interaction_matrix, 'data'),
         State(ids.dynamical_system_dropdown, 'value'),
     )
@@ -36,6 +41,7 @@ def render(app: Dash, style: dict[str, str] | None = None) -> html.Div:
         t_final: float,
         time: Vector,
         y: OdeSolution,
+        initial_condition: Vector,
         interaction_matrix: Matrix,
         dynamical_system_id: int) \
             -> tuple[Vector, OdeSolution]:
@@ -43,7 +49,7 @@ def render(app: Dash, style: dict[str, str] | None = None) -> html.Div:
         """ dynamical_system(t, y, alpha) -> dy/dt """
         dynamical_system = id_to_dynamical_system(dynamical_system_id)
         y = np.array(y)
-        y0 = y[:, 0]
+        y0 = np.array(initial_condition)
         
         if len(interaction_matrix) != len(y0):
             N = len(interaction_matrix)
@@ -59,4 +65,4 @@ def render(app: Dash, style: dict[str, str] | None = None) -> html.Div:
 
         return t_new, y_new
 
-    return html.Div([integrate_button], style=style)
+    return html.Div([integrate_button, integrate_tooltip], className=class_name)
