@@ -1,7 +1,4 @@
 /test.py
 /tests.ipynb
-/base
-/file_system_backend
-/generalised_lotka_volterra
-/interaction_matrix
 /interactive/streamlit.py
+/interactive/utility/CircularBuffer.py

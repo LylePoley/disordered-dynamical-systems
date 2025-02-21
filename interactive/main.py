@@ -3,6 +3,7 @@ from dash import Dash, html
 
 from src.components.variables import (
     dynamical_system,
+    initial_condition,
     interaction_matrix,
     interaction_mean,
     interaction_noise,
@@ -13,13 +14,14 @@ from src.components.variables import (
     y,
 )
 
+
 from src.components.plots import (
-    trajectories
+    trajectories,
+    interaction_matrix_heatmap
 )
 
 from src.components import (
     integration,
-    style,
     title,
 )
 
@@ -49,53 +51,59 @@ sidebar = html.Div(
             "Select options for the integration.", className="lead"
         ),
         html.Hr(),
+        interaction_noise.render(app, class_name="sidebar-button"),
+        integration.render(app, class_name="sidebar-button"),
+        initial_condition.render(app, class_name="sidebar-button"),
+
+
+        html.Hr(),
+        dynamical_system.render(
+            app, class_name="sidebar-dropdown"
+        ),
+        html.Hr(),
+
         interaction_mean.render(
-            app, style=style.SIDEBAR_LABELLED_INPUT
+            app, class_name="sidebar-input"
         ),
 
         html.Hr(),
         interaction_standard_deviation.render(
-            app, style=style.SIDEBAR_LABELLED_INPUT
+            app, class_name = "sidebar-input"
         ),
 
         html.Hr(),
         number_of_agents.render(
-            app, style=style.SIDEBAR_LABELLED_INPUT
+            app, class_name="sidebar-input"
         ),
 
         html.Hr(),
         time_final.render(
-            app, style=style.SIDEBAR_LABELLED_INPUT
+            app, class_name="sidebar-input"
         ),
 
-        html.Hr(),
-        interaction_noise.render(
-            app, style=style.SIDEBAR_DIV
-        ),
 
-        html.Hr(),
-        integration.render(
-            app, style=style.SIDEBAR_DIV
-        ),
-
-        html.Hr(),
-        dynamical_system.render(
-            app, style=style.SIDEBAR_DROPDOWN
-        )
     ],
-    style=style.SIDEBAR,
+    className="sidebar"
 )
 
+main_content = html.Div([
+    title.render(app),
+    trajectories.render(app, class_name="figure"),
+    # interaction_matrix_heatmap.render(app, class_name="figure")
+],
+className = "main-content"
+)
 
 app.layout = html.Div([
     sidebar,
-    title.render(app, style=style.TITLE_DIV),
-    trajectories.render(app, style=style.CONTENT),
+    main_content,
 
     # invisible components
     interaction_matrix.render(app),
     time.render(),
     y.render(),
+
+
 ])
 
 
