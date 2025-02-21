@@ -89,7 +89,6 @@ sidebar = html.Div(
 main_content = html.Div([
     title.render(app),
     trajectories.render(app, class_name="figure"),
-    # interaction_matrix_heatmap.render(app, class_name="figure")
 ],
 className = "main-content"
 )
@@ -101,11 +100,8 @@ app.layout = html.Div([
     # invisible components
     interaction_matrix.render(app),
     time.render(),
-    y.render(),
-
-
+    y.render()
 ])
-
 
 if __name__ == "__main__":
     app.run_server(debug=True)
