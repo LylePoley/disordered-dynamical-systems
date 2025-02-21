@@ -3,7 +3,7 @@ import dash_bootstrap_components as dbc
 import numpy as np
 
 from src.components.registers import ids, initial_values, types
-from src.components import style
+from src.components.plots import interaction_matrix_heatmap
 
 z_store = dcc.Store(
     id=ids.interaction_noise,
@@ -14,11 +14,10 @@ z_reset_button = dbc.Button(
     'Re-draw noise',
     id=ids.interaction_noise_reset_button,
     color='primary',
-    style=style.SIDEBAR_BUTTON
 )
 
 
-def render(app: Dash, style: dict[str, str] | None = None) -> html.Div:
+def render(app: Dash, class_name: str | None = None) -> html.Div:
     @app.callback(
         Output(ids.interaction_noise, 'data'),
         Input(ids.interaction_noise_reset_button, 'n_clicks'),
@@ -28,4 +27,12 @@ def render(app: Dash, style: dict[str, str] | None = None) -> html.Div:
     def reset_interaction_noise(n_clicks: int, number_of_agents: int) -> types.Matrix:
         return np.random.normal(0, 1, (number_of_agents, number_of_agents))
 
-    return html.Div([z_reset_button, z_store], style=style)
+    z_reset_tooltip = dbc.Tooltip(
+        [
+            dcc.Markdown(
+                r"""Re-generates the interaction coefficients $\alpha_{ij}$ form a Gaussian distribution with mean $\frac{\mu}{N}$ and variance $\frac{\sigma^2}{N}$. Below is a heatmap of the interaction matrix.""", mathjax=True),
+            html.Div([interaction_matrix_heatmap.render(app)], className="heatmap-tooltip")],
+        target=ids.interaction_noise_reset_button
+    )
+
+    return html.Div([z_reset_button, z_store, z_reset_tooltip], className=class_name)

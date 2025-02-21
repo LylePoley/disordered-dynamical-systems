@@ -4,7 +4,6 @@ from dash import Dash, Input, Output, State, dcc
 
 import plotly.graph_objects as go
 from src.components.registers import ids, initial_values, types
-from src.components import style
 
 def make_figure(t: types.Vector | list = [], y: types.OdeSolution | list = []) -> go.Figure:
     fig = go.Figure()
@@ -19,7 +18,7 @@ def make_figure(t: types.Vector | list = [], y: types.OdeSolution | list = []) -
 
     return fig
 
-def render(app: Dash, style: dict[str, str] | None = None) -> dcc.Graph:
+def render(app: Dash, class_name: str | None = None) -> dcc.Graph:
     @app.callback(
         Output(ids.abundance_plot, 'figure'),
         Input(ids.time, 'data'),
@@ -42,5 +41,5 @@ def render(app: Dash, style: dict[str, str] | None = None) -> dcc.Graph:
 
     return dcc.Graph(id=ids.abundance_plot,
                      figure=fig,
-                     style=style
+                     className=class_name
                      )

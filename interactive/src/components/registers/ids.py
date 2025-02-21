@@ -3,14 +3,11 @@
 """ variables """
 dynamical_system_id = 'dynamical-system-id'
 interaction_matrix = 'interaction-matrix'
-# interaction_mean = 'interaction-mean'
 interaction_noise = 'interaction-noise'
-# interaction_standard_deviation = 'interaction-standard-deviation'
-# number_of_agents = 'number-of-agents'
 time = 'time'
 time_final = 'time-final'
 y = 'y'
-y0 = 'y0'
+initial_condition = 'initial-condition'
 
 """ inputs """
 interaction_mean_input = 'mean-input'
@@ -20,12 +17,8 @@ time_final_input = 'time-final-input'
 
 """ buttons """
 integrate_button = 'integrate-button'
-# interaction_mean_button = 'interaction-mean-button'
 interaction_noise_reset_button = 'interaction-noise-reset-button'
-# interaction_standard_deviation_button = 'interaction-standard-deviation-button'
-# number_of_agents_button = 'number-of-agents-button'
-reset_simulation_button = 'reset-simulation-button'
-# time_final_button = 'time-final-button'
+initial_condition_reset_button = 'initial-condition-reset-button'
 
 """ dropdowns """
 dynamical_system_dropdown = 'dynamical-system-dropdown'
@@ -33,10 +26,19 @@ dynamical_system_dropdown = 'dynamical-system-dropdown'
 """ plots """
 abundance_histogram = 'abundance-histogram'
 abundance_plot = 'abundance-plot'
-alpha_heatmap = 'alpha-heatmap'
+interaction_matrix_heatmap = 'interaction-matrix-heatmap'
 
 
 """ Title"""
-display_equation_latex_title = 'display-equation-latex-title'
-display_equation_description_title = 'display-equation-description-title'
+display_equation_latex = 'display-equation-latex'
+display_equation_description = 'display-equation-description'
 title = 'title'
+
+""" Tooltips """
+# dynamical_system_dropdown_tooltip = 'dynamical-system-dropdown-tooltip'
+# integrate_button_tooltip = 'integration-button-tooltip'
+# interaction_mean_tooltip = 'interaction-mean-tooltip'
+# interaction_noise_reset_button_tooltip = 'interaction-noise-reset-button-tooltip'
+# interaction_standard_deviation_tooltip = 'interaction-standard-deviation-tooltip'
+# number_of_agents_tooltip = 'number-of-agents-tooltip'
+# time_final_tooltip = 'time-final-tooltip'

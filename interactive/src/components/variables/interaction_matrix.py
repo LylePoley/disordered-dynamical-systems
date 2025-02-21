@@ -1,4 +1,5 @@
 from dash import Dash, Input, Output, State, html, dcc
+
 import numpy as np
 
 from src.components.registers import (ids, initial_values, types)
@@ -10,12 +11,12 @@ interaction_matrix_store = dcc.Store(
 def render(app: Dash) -> html.Div:
     @app.callback(
         Output(ids.interaction_matrix, 'data'),
-        Input(ids.interaction_mean_input, 'value'),
-        Input(ids.interaction_standard_deviation_input, 'value'),
         Input(ids.interaction_noise, 'data'),
+        State(ids.interaction_mean_input, 'value'),
+        State(ids.interaction_standard_deviation_input, 'value'),
         prevent_initial_call=True
     )
-    def update_alpha(mean: float, standard_deviation: float, noise: types.Matrix) -> types.Matrix:
+    def update_alpha(noise: types.Matrix, mean: float, standard_deviation: float) -> types.Matrix:
         z = np.asarray(noise)
         N = z.shape[0]
 

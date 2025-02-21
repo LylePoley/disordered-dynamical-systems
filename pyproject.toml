@@ -1,16 +1,22 @@
-[tool.poetry]
+[project]
 name = "disordered-dynamical-systems"
 version = "0.1.0"
-description = "A project for studying disordered dynamical systems"
-authors = ["Your Name <your.email@example.com>"]
-license = "MIT"
+description = "A tool to explore the behaviour of some disordered dynamical systems. In particular, high dimensional differential equations with randomly drawn, pairwise interaction coefficients."
+authors = [
+    {name = "Lyle Poley",email = "poleylyle@gmail.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.10,<4.0"
+dependencies = [
+    "dash (>=2.18.2,<3.0.0)",
+    "dash-bootstrap-components (>=1.6.0,<2.0.0)",
+    "scipy (>=1.14.1,<2.0.0)",
+    "numpy (>=2.0.2,<3.0.0)",
+    "plotly (>=5.24.1,<6.0.0)"
+]
 
-[tool.poetry.dependencies]
-python = "^3.8"
-
-[tool.poetry.dev-dependencies]
-pytest = "^6.2"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
