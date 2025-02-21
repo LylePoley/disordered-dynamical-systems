@@ -7,5 +7,5 @@ For example, the Generalised Lotka-Volterra equations can exhibit the following 
 2. Setting $\mu=-20$ and $\sigma=3$ is likely to produce dynamical systems which will either not settle into a steady state, or tha will settle into a steady state that *does* depend on the initial condition. 
 3. Setting $\mu=2$ and $\sigma=1$ is likely to produce dynamics which diverge. That is, the values of $y_i$ will eventually blow up to $\infty$.
 
-## Running the applet
+## Running the app
 This is a python only project and will run in a python environment meeting the requirements listed in the .toml file. You can install the dependencies to a python environment yourself, and run main.py. Alternatively, you could use poetry to make the environment and install the necessary dependencies for you.
