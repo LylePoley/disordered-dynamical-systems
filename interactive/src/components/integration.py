@@ -1,7 +1,7 @@
 from dash import Dash, Input, Output, State, html, dcc
 import dash_bootstrap_components as dbc
 import numpy as np
-from src.components.registers import ids, types
+from src.components.registers import ids
 from utility.integrate import integrate, draw_initial_condition
 from .registers.constants import dt
 from src.components.variables.dynamical_system import id_to_dynamical_system
@@ -45,12 +45,12 @@ def render(app: Dash, class_name: str | None = None) -> html.Div:
         interaction_matrix: Matrix,
         dynamical_system_id: int) \
             -> tuple[Vector, OdeSolution]:
-        
+
         """ dynamical_system(t, y, alpha) -> dy/dt """
         dynamical_system = id_to_dynamical_system(dynamical_system_id)
         y = np.array(y)
         y0 = np.array(initial_condition)
-        
+
         if len(interaction_matrix) != len(y0):
             N = len(interaction_matrix)
             y0 = draw_initial_condition(N)
