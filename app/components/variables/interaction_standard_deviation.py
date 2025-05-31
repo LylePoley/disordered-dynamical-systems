@@ -3,6 +3,8 @@ import dash_bootstrap_components as dbc
 
 from constants import ids, initial_values
 
+from text.tooltips import interaction_standard_deviation as tooltip_text
+
 interaction_standard_deviation_input = dcc.Input(
     id=ids.interaction_standard_deviation_input,
     type='number',
@@ -10,13 +12,9 @@ interaction_standard_deviation_input = dcc.Input(
 )
 
 interaction_standard_deviation_tooltip = dbc.Tooltip(
-    [dcc.Markdown(r"""$\frac{\sigma^2}{N}$ is the variance of the
-                  distribution from which the elements of
-                  $\underline{\underline{\alpha}}$ are generated. For large
-                  enough $N$, we have""",
+    [dcc.Markdown(tooltip_text[0],
                   mathjax=True),
-     dcc.Markdown(r"""$$\sigma^2 = \frac{1}{N}\sum_{ij}\left(\alpha_{ij}
-                   - \frac{\mu}{N}\right)^2.$$""", mathjax=True)],
+     dcc.Markdown(tooltip_text[1], mathjax=True)],
     target=ids.interaction_standard_deviation_input,
 )
 

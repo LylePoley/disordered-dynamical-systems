@@ -3,6 +3,8 @@ import dash_bootstrap_components as dbc
 
 from constants import ids, initial_values
 
+from text.tooltips import interaction_mean as tooltip_text
+
 interaction_mean_input = dcc.Input(
     id=ids.interaction_mean_input,
     type='number',
@@ -11,11 +13,9 @@ interaction_mean_input = dcc.Input(
 )
 
 interaction_mean_tooltip = dbc.Tooltip(
-    [dcc.Markdown(r"""$\frac{\mu}{N}$ is the mean value of the distribution
-                  from which the elements of $\underline{\underline{\alpha}}$
-                  are generated. For large enough $N$, we have""",
+    [dcc.Markdown(tooltip_text[0],
                   mathjax=True),
-     dcc.Markdown(r"""$$\mu = \frac{1}{N}\sum_{ij}\alpha_{ij}.$$""", mathjax=True)],
+     dcc.Markdown(tooltip_text[1], mathjax=True)],
     target=ids.interaction_mean_input,
 )
 

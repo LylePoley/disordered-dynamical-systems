@@ -7,6 +7,8 @@ from components.variables.dynamical_system import id_to_dynamical_system
 
 from constants.types import Vector, Matrix, OdeSolution
 
+from text.tooltips import integration as tooltip_text
+
 
 integrate_button = dbc.Button(
     'Integrate dynamics',
@@ -18,9 +20,7 @@ integrate_button = dbc.Button(
 integrate_tooltip = dbc.Tooltip(
     [
         dcc.Markdown(
-            r"""Integrates the dynamics in the range $0<t<T$. Note that the
-            plot will not change if none of the interaction matrix, initial
-            condition, or dynamical system are changed.""",
+            tooltip_text,
             mathjax=True)],
     target=ids.integrate_button
 )

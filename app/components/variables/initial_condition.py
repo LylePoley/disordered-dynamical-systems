@@ -4,6 +4,8 @@ import numpy as np
 
 from constants import ids, initial_values, types
 
+from text.tooltips import initial_condition as tooltip_text
+
 initial_condition_store = dcc.Store(
     id=ids.initial_condition,
     data=initial_values.y0
@@ -18,8 +20,7 @@ initial_condition_reset_button = dbc.Button(
 initial_condition_reset_tooltip = dbc.Tooltip(
     [
         dcc.Markdown(
-            r"""Re-generates the initial condition $y_i(0)$. Each $y_i(0)$ is
-            drawn from a uniform distribution in the range $[0, 1]$.""",
+            tooltip_text,
             mathjax=True)],
     target=ids.initial_condition_reset_button
 )

@@ -3,6 +3,8 @@ import dash_bootstrap_components as dbc
 
 from constants import ids, initial_values
 
+from text.tooltips import time_final as tooltip_text
+
 time_final_input = dcc.Input(
     id=ids.time_final_input,
     type='number',
@@ -10,9 +12,7 @@ time_final_input = dcc.Input(
 )
 
 time_final_tooltip = dbc.Tooltip(
-    [dcc.Markdown(r"""The dynamics will be integrated from $t=0$ to $t=T$.
-                  Larger values of $T$ will lead to longer integration
-                  times.""", mathjax=True)],
+    [dcc.Markdown(tooltip_text, mathjax=True)],
     target=ids.time_final_input,
 )
 

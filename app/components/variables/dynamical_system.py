@@ -6,6 +6,8 @@ from constants import ids, types
 from dash import Dash, html, dcc
 import dash_bootstrap_components as dbc
 
+from text.tooltips import dynamical_system as tooltip_text
+
 # TODO: add more dynamical systems
 # TODO: add descriptions to each system to put into tooltips
 
@@ -100,9 +102,7 @@ dynamical_system_dropdown = dcc.Dropdown(
 )
 
 dynamical_system_tooltip = dbc.Tooltip(
-    """Select which dynamical system to integrate.
-    On pressing the 'integrate' button, the selected
-    dynamical system will be integrated and the results displayed.""",
+    tooltip_text,
     target=ids.dynamical_system_dropdown,
 )
 

@@ -5,6 +5,8 @@ import numpy as np
 from constants import ids, initial_values, types
 from components.plots import interaction_matrix_heatmap
 
+from text.tooltips import interaction_noise as tooltip_text
+
 z_store = dcc.Store(
     id=ids.interaction_noise,
     data=initial_values.interaction_noise
@@ -30,10 +32,7 @@ def render(app: Dash, class_name: str | None = None) -> html.Div:
     z_reset_tooltip = dbc.Tooltip(
         [
             dcc.Markdown(
-                r"""Re-generates the interaction coefficients $\alpha_{ij}$
-                from a Gaussian distribution with mean $\frac{\mu}{N}$ and
-                variance $\frac{\sigma^2}{N}$. Below is a heatmap of the
-                interaction matrix.""",
+                tooltip_text,
                 mathjax=True),
             html.Div([interaction_matrix_heatmap.render(app)], className="heatmap-tooltip")],
         target=ids.interaction_noise_reset_button
