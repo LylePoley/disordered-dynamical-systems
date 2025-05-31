@@ -1,4 +1,5 @@
-/test.py
-/tests.ipynb
-/interactive/streamlit.py
-/interactive/utility/CircularBuffer.py
+app/components/__pycache__/
+app/components/plots/__pycache__/
+app/components/variables/__pycache__/
+app/constants/__pycache__/
+app/utility/__pycache__/
