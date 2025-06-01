@@ -1,0 +1,82 @@
+# Python bytecode and cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+
+# Version control
+.git/
+.gitignore
+
+# macOS system files
+.DS_Store
+
+# IDE/editor settings
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Build and distribution outputs
+dist/
+build/
+out/
+tmp/
+temp/
+*.tmp
+
+# Test and debug artifacts
+test/
+tests/
+debug/
+*.log
+
+# Node.js (not detected, but common)
+node_modules/
+npm-debug.log
+yarn-debug.log
+
+# Go (not detected, but common)
+/vendor/
+*.test
+.go-cache/
+
+# Java (not detected, but common)
+target/
+*.class
+.gradle/
+
+# SVN/Mercurial
+.svn/
+.hg/
+
+# Environment and secrets
+.env*
+*.env
+*.pem
+*.key
+*.crt
+config.local.*
+*.local.yml
+.local/
+local/
+
+# Documentation
+README*
+*.md
+docs/
+
+# Docker files (not needed in build context)
+Dockerfile*
+docker-compose*
+
+# Project-specific
+
+# Exclude lock and TOML files from ignore (needed for dependency management)
+!poetry.lock
+!pyproject.toml
+
+# Exclude CSS assets (needed for app)
+!app/assets/style.css

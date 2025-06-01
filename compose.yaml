@@ -1,0 +1,10 @@
+services:
+  python-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: python-app
+    restart: unless-stopped
+    init: true
+    ports:
+      - "8050:8050"  # Dash app exposed on port 8050
