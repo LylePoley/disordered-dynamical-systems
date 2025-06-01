@@ -4,4 +4,5 @@ app/components/variables/__pycache__/
 app/constants/__pycache__/
 app/text/__pycache__/
 app/utility/__pycache__/
+app/__pycache__/
 .DS_Store
