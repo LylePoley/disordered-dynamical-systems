@@ -4,13 +4,17 @@
 
 ## Purpose
 This is a dash app which is intended to help get an intuition for the behaviour of large disordered dynamical systems. Specifically, disordered dynamical systems which are composed of $N$ interacting agents $x_i(t)$ following dynamics of the form
+
 $$
 \frac{\mathrm dx_i}{\mathrm dt} = f\left(x_i, \sum_{j = 1, j\neq i}^N\alpha_{ij}x_j\right),
 $$
+
 where the interaction coefficients $\alpha_{ij}$ dictates the influence of agent $j$ on agent $i$. The coefficients $\alpha_{ij}$ are independent and identically distributed Gaussian random varliables with mean and variance
+
 $$
 \left\langle\alpha_{ij}\right\rangle = \frac{\mu}{N}, \hspace{1cm} \mathrm{Var}\left(\alpha_{ij}\right) = \frac{\sigma^2}{N}.
 $$
+
 Once the coefficients are drawn, the resulting dynamics are deterministic.
 
 
